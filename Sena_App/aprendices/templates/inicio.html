@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - SENA APP{% endblock %}
+
+{% block head %}
+<style>
+    :root {
+        --primary-color: #28a745; /* SENA Green */
+        --secondary-color: #6c757d; /* Grey */
+        --accent-color: #007bff; /* Blue for links/buttons */
+        --background-color: #f8f9fa;
+        --card-background: #ffffff;
+        --text-color: #343a40;
+        --border-color: #e0e0e0;
+        --shadow-light: rgba(0, 0, 0, 0.08);
+        --shadow-medium: rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+        font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 20px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    /* General Container and Layout */
+    .container-fluid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -10px; /* Adjust for padding on columns */
+    }
+
+    .col-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 10px;
+    }
+
+    /* Hero Section (Jumbotron replacement) */
+    .hero-section {
+        background-color: var(--primary-color);
+        color: #fff;
+        padding: 3rem 2.5rem; /* Equivalent to p-5 */
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 8px 20px var(--shadow-medium);
+        animation: fadeInScale 0.8s ease-out;
+        margin-bottom: 2rem;
+    }
+
+    .hero-section h1 {
+        font-size: 3.5rem; /* Equivalent to display-4 */
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-section p.lead {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-bottom: 1rem;
+    }
+
+    .hero-section hr {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 1.5rem auto; /* Equivalent to my-4 */
+        width: 80%;
+    }
+
+    .hero-section p {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.75rem 1.5rem; /* Equivalent to btn-lg */
+        font-size: 1.1rem;
+        line-height: 1.5;
+        border-radius: 0.5rem; /* Slightly more rounded */
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-light {
+        color: var(--primary-color); /* Text color from primary */
+        background-color: #f8f9fa; /* Light background */
+        border-color: #f8f9fa;
+    }
+
+    .btn-light:hover {
+        background-color: #e2e6ea;
+        border-color: #dae0e5;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px var(--shadow-light);
+    }
+
+    .btn-success {
+        color: #fff;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-light);
+    }
+
+    /* Cards */
+    .card {
+        background-color: var(--card-background);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px var(--shadow-light);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        margin-bottom: 20px; /* Space between cards on small screens */
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px var(--shadow-medium);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    /* Margin Top */
+    .mt-4 {
+        margin-top: 2rem; /* Equivalent to Bootstrap's mt-4 */
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        .hero-section h1 {
+            font-size: 2.5rem;
+        }
+        .hero-section p.lead {
+            font-size: 1.2rem;
+        }
+        .btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section">
+                <h1>Bienvenido a SENA APP</h1>
+                <p class="lead">Sistema de Gestión de Aprendices del Servicio Nacional de Aprendizaje</p>
+                <hr>
+                <p>Administra y consulta la información de los aprendices de manera eficiente.</p>
+                <a class="btn btn-light" href="{% url 'aprendices:lista_aprendices' %}" role="button">
+                    Ver Aprendices
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Lista de Aprendices</h5>
+                    <p class="card-text">Consulta todos los aprendices registrados en el sistema.</p>
+                    <a href="{% url 'aprendices:lista_aprendices' %}" class="btn btn-success">Ver Lista de Aprendices</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Panel Administrativo</h5>
+                    <p class="card-text">Accede al panel para gestionar aprendices (crear, editar, eliminar).</p>
+                    <a href="{% url 'admin:index' %}" class="btn btn-success">Ir al Panel Administrativo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
