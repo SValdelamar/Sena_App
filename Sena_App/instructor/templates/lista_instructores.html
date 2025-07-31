@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Instructores SENA - SENA APP{% endblock %}
+
+{% block head %}
+<style>
+    /* VARIABLES CSS - Mantener para consistencia */
+    :root {
+        --primary-color: #28a745; /* SENA Green */
+        --secondary-color: #6c757d; /* Grey */
+        --accent-color: #007bff; /* Blue for links/buttons */
+        --background-color: #f0f2f5; /* Light grey for a cleaner background */
+        --card-background: #ffffff;
+        --text-color: #333333; /* Darker text for better readability */
+        --border-color: #e9ecef; /* Lighter border for a cleaner look */
+        --shadow-light: rgba(0, 0, 0, 0.05);
+        --shadow-medium: rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.5; /* Slightly tighter line height */
+        color: var(--text-color);
+        background-color: var(--background-color);
+        margin: 0;
+        padding: 20px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    /* General Layout */
+    .container-fluid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px; /* Increased padding for better spacing */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+    }
+
+    .col-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 10px 0;
+    }
+
+    /* Headings */
+    h2 {
+        color: var(--primary-color);
+        font-weight: 700; /* Bolder font weight for headings */
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 70px; /* A bit wider line */
+        height: 4px; /* Thicker line */
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+
+    /* Flexbox utilities - Ajustados para un mejor control */
+    .d-flex {
+        display: flex;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .mb-4 {
+        margin-bottom: 2rem;
+    }
+
+    .ms-2 {
+        margin-left: 0.75rem; /* Ajustado el margen */
+    }
+
+    /* Badges - Ligeramente más compactos */
+    .badge {
+        display: inline-block;
+        padding: 0.4em 0.7em;
+        font-size: 0.85em; /* Ligeramente más pequeño */
+        font-weight: 600;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        border-radius: 0.375rem;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .badge:hover {
+        transform: scale(1.05); /* Efecto de crecimiento sutil */
+    }
+
+    .bg-info {
+        color: #fff;
+        background-color: var(--accent-color);
+    }
+
+    .fs-6 {
+        font-size: 0.9rem; /* Un poco más pequeño para caber mejor */
+    }
+
+    /* Buttons - Refinados */
+    .btn {
+        display: inline-flex; /* Usar flex para centrar contenido verticalmente */
+        align-items: center;
+        gap: 8px; /* Espacio entre el ícono y el texto, si lo hubiera */
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        user-select: none;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.6rem 1.2rem; /* Aumentado el padding para un mejor click target */
+        font-size: 0.9rem; /* Un poco más compacto */
+        line-height: 1.5;
+        border-radius: 0.5rem; /* Bordes más redondeados */
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición más suave */
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-success {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: translateY(-3px); /* Un efecto de elevación más pronunciado */
+        box-shadow: 0 6px 12px var(--shadow-medium);
+    }
+
+    .btn-outline-primary {
+        color: var(--accent-color);
+        border-color: var(--accent-color);
+        background-color: transparent;
+    }
+
+    .btn-outline-primary:hover {
+        color: #fff;
+        background-color: var(--accent-color);
+        box-shadow: 0 4px 8px var(--shadow-light);
+        transform: translateY(-2px);
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.8rem; /* Padding ajustado */
+        font-size: 0.8rem;
+        border-radius: 0.3rem;
+    }
+
+    /* Table Styles - PRINCIPALES CAMBIOS AQUÍ */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        background-color: var(--card-background);
+        border-radius: 12px; /* Más redondeado para un look moderno */
+        box-shadow: 0 8px 20px var(--shadow-light); /* Sombra más suave y extendida */
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 0; /* Eliminar margen inferior de la tabla */
+        color: var(--text-color);
+        border-collapse: collapse; /* Colapsar bordes para un look limpio */
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid var(--border-color);
+        font-size: 0.9rem; /* Letras de cabecera más pequeñas */
+        font-weight: 700;
+        text-transform: uppercase; /* Mayúsculas para las cabeceras */
+        letter-spacing: 0.5px; /* Espaciado entre letras */
+        color: #fff;
+        background-color: var(--primary-color); /* Fondo oscuro en la cabecera */
+        padding: 1rem 1.5rem; /* Padding más generoso */
+    }
+
+    .table td {
+        padding: 1rem 1.5rem; /* Padding uniforme y ajustado */
+        vertical-align: middle; /* Alineación vertical al medio */
+        border-top: 1px solid var(--border-color);
+        font-size: 0.95rem;
+    }
+    
+    /* Evitar que las celdas de especialidad se vean muy grandes */
+    .table td:nth-child(5) {
+        max-width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.02); /* Sombreado más sutil */
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.05); /* Sombreado de hover más sutil */
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px var(--shadow-light);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .table a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .table a:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+    }
+
+    /* Alertas */
+    .alert {
+        padding: 1.5rem; /* Más padding para que se sienta más espacioso */
+        margin-bottom: 2rem;
+        border: none; /* Eliminar borde */
+        border-left: 5px solid var(--accent-color); /* Borde izquierdo de color para destacar */
+        border-radius: 8px;
+        box-shadow: 0 4px 12px var(--shadow-light);
+        animation: slideInUp 0.6s ease-out;
+    }
+    
+    .alert-info {
+        color: #004085;
+        background-color: #cce5ff;
+        border-color: #007bff;
+    }
+
+    .alert-heading {
+        color: #004085;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Media Queries - Mejoras en la responsividad */
+    @media (max-width: 992px) {
+        .table thead th, .table td {
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+        .container-fluid {
+            padding: 0 10px;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .d-flex.justify-content-between > div {
+            margin-top: 15px;
+        }
+        .btn.ms-2 {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+        .table-responsive {
+            border-radius: 0;
+            box-shadow: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Lista de Instructores SENA</h2>
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-info fs-6">Total: {{ total_instructores }} instructores</span>
+                    <a href="{% url 'admin:instructor_instructor_add' %}" class="btn btn-success ms-2">
+                        Nuevo Instructor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if lista_instructores %}
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Documento</th>
+                            <th>Nombre Completo</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Especialidad</th>
+                            <th>Sede</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instructor in lista_instructores %}
+                        <tr>
+                            <td><strong>{{ instructor.documento_identidad }}</strong></td>
+                            <td>{{ instructor.nombre_completo }}</td>
+                            <td>
+                                <a href="mailto:{{ instructor.correo }}">{{ instructor.correo }}</a>
+                            </td>
+                            <td>{{ instructor.telefono }}</td>
+                            <td>
+                                <small class="text-muted">{{ instructor.especialidad }}</small>
+                            </td>
+                            <td>{{ instructor.sede }}</td>
+                            <td>
+                                <a href="{% url 'admin:instructor_instructor_add'%}" class="btn btn-sm btn-outline-primary">
+                                    Editar
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">No hay instructores registrados</h4>
+                <p>Aún no se han registrado instructores en el sistema.</p>
+                <hr>
+                <p class="mb-0">
+                    <a href="{% url 'admin:instructor_instructor_add' %}" class="btn btn-success">
+                        Registrar Primer Instructor
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

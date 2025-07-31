@@ -211,6 +211,9 @@
                 <a class="btn btn-light" href="{% url 'aprendices:lista_aprendices' %}" role="button">
                     Ver Aprendices
                 </a>
+                <a class="btn btn-light" href="{% url 'instructor:lista_instructores' %}" role="button">
+                    Ver Instructores
+                </a>
             </div>
         </div>
     </div>
@@ -229,7 +232,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Panel Administrativo</h5>
-                    <p class="card-text">Accede al panel para gestionar aprendices (crear, editar, eliminar).</p>
+                    <p class="card-text">Accede al panel para gestionar aprendices.</p>
                     <a href="{% url 'admin:index' %}" class="btn btn-success">Ir al Panel Administrativo</a>
                 </div>
             </div>
