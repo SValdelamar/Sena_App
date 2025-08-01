@@ -5,7 +5,7 @@ from .models import Programa
 
 def programasv(request):
     lista_programas = Programa.objects.all().order_by('nombre')
-    template = loader.get_template('lista_programas.html')
+    template = loader.get_template('lista_programas')
     context = {
     'lista_programas': lista_programas,
     'total_programas': lista_programas.count(),
