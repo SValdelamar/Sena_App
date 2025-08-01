@@ -307,7 +307,7 @@
                 <h2>Lista de Programas SENA</h2>
                 <div>
                     <span class="badge bg-info fs-6">Total: {{ total_programas }} programas</span>
-                    <a href="{% url 'admin:programas_programa_add' %}" class="btn btn-success ms-2">
+                    <a href="{% url 'admin:programas_programa_add' %}" class="btn btn-success ms-2" role="button">
                         Nuevo Programa
                     </a>
                 </div>
